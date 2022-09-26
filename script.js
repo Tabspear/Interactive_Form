@@ -38,8 +38,6 @@ let colorBox = document.querySelector("#color");
 //This divides the color options to two
 let arrOptions = colorBox.options;
 const newArrayOptions = Array.from(arrOptions);
-let firstHalf = newArrayOptions.slice(0, 4);
-let secondHalf = newArrayOptions.slice(4);
 
 // the colorBox should be disabled
 // if user selects a design then the design should be enabled.
@@ -49,26 +47,27 @@ function chooseDesign(element) {
   }
 
   if (element.value === "js puns") {
-    let first = changeColor(firstHalf);
-    return first;
+   changeColor(newArrayOptions, element.value);
+
   } 
   
-  
-  if (element.value === "heart js") {
-    let second = changeColor(secondHalf);
-    return second;
-  } else {
+  else if (element.value === "heart js") {
+    changeColor(newArrayOptions, element.value);
+  } 
+  else {
     colorBox.disabled = true;
   }
   //prevents adding up
 }
 
-function changeColor(element) {
+function changeColor(element, value) {
+ 
   element.forEach((item) => {
-    if (item.hidden === true) {
+    console.log(item.hidden)
+    if (item.getAttribute("data-theme") === value) {
       item.hidden = false;
     } else {
-      item.hidden === true;
+      item.hidden = true;
     }
     return;
   });
@@ -278,3 +277,15 @@ function sectionValidation() {
     }
   });
 }
+
+//Adds Focus
+let inputCheckbox = document.querySelectorAll(`[type='checkbox']`);
+inputCheckbox.forEach((checkbox) => {
+  checkbox.addEventListener("focus", (e) => {
+    e.target.parentElement.classList.add("focus");
+  });
+
+  checkbox.addEventListener("blur", (e) => {
+    e.target.parentElement.classList.remove("focus");
+  });
+});
